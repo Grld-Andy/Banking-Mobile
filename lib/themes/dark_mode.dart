@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bank/themes/text_theme.dart';
 
 ThemeData darkMode = ThemeData(
   fontFamily: "VendSan",
+  textTheme: textTheme,
   colorScheme: ColorScheme.light(
     primary: Colors.grey.shade500,
     secondary: const Color.fromARGB(255, 39, 39, 39),

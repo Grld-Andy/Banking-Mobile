@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bank/themes/text_theme.dart';
 
 extension CustomColors on ColorScheme {
   Color get green => Colors.green.shade400;
@@ -6,6 +7,7 @@ extension CustomColors on ColorScheme {
 
 ThemeData lightMode = ThemeData(
   fontFamily: "VendSan",
+  textTheme: textTheme,
   colorScheme: ColorScheme.light(
     primary: Colors.grey.shade500,
     secondary: Colors.grey.shade200,
