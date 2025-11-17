@@ -66,7 +66,7 @@ class _MainpageState extends State<Mainpage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top:10.0, left: 10.0, right: 10.0),
           child: PageView(
             controller: _pageController,
             onPageChanged: (index){
