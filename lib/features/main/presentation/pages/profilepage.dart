@@ -98,7 +98,7 @@ class _ProfilepageState extends State<Profilepage> {
                   ],
                 ),
                 ListView.separated(
-                  separatorBuilder: (_, _) => SizedBox(height: 5),
+                  separatorBuilder: (_, _) => SizedBox(height: 10),
                   shrinkWrap: true,
                   itemCount: personalInfoList.length,
                   itemBuilder: (context, index) {
@@ -106,7 +106,7 @@ class _ProfilepageState extends State<Profilepage> {
                     return Row(
                       spacing: 10,
                       children: [
-                        item.icon,
+                        Icon(item.icon, color: Theme.of(context).colorScheme.inversePrimary,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

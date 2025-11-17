@@ -85,6 +85,7 @@ class _MainpageState extends State<Mainpage> {
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         child: BottomNavigationBar(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index){

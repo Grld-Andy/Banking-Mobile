@@ -81,7 +81,8 @@ class _HomepageState extends State<Homepage> {
                       IconButton(
                         onPressed: setIsMoneyVisible,
                         icon: Icon(
-                          _isMoneyVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined
+                          _isMoneyVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         )
                       )
                     ],
@@ -172,7 +173,7 @@ class _HomepageState extends State<Homepage> {
                 ),
                 ListView.separated(
                   itemCount: transactions.length,
-                  separatorBuilder: (_, _) => Divider(height: 20.0, thickness: 0.5, indent: 60, endIndent: 10,),
+                  separatorBuilder: (_, _) => Divider(height: 20.0, color: Theme.of(context).colorScheme.inversePrimary, thickness: 0.5, indent: 60, endIndent: 10,),
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index){

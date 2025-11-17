@@ -38,7 +38,11 @@ class Salutations extends StatelessWidget {
               border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(Icons.notifications_none_outlined, size: 25,)
+            child: Icon(
+              Icons.notifications_none_outlined,
+              color: Theme.of(context).colorScheme.inversePrimary,
+              size: 25,
+            )
           ),
         )
       ],
