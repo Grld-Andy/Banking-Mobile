@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_bank/features/main/domain/models/bank_card.dart';
+import 'package:mobile_bank/features/main/presentation/components/homepage/credit_card.dart';
+import 'package:mobile_bank/features/main/presentation/components/homepage/salutations.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -56,43 +58,8 @@ class _HomepageState extends State<Homepage> {
       spacing: 15,
       children: [
         // Salutations
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Good morning, Terry",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
-                  ),
-                ),
-                Text(
-                  "Welcome to Creditet",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
-                  ),
-                ),
-              ],
-            ),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(Icons.notifications_none_outlined, size: 25,)
-              ),
-            )
-          ],
-        ),
-        
+        Salutations(),
+
         // Check balance
         Container(
           padding: EdgeInsets.all(15),
@@ -180,93 +147,44 @@ class _HomepageState extends State<Homepage> {
             separatorBuilder: (_, __) => SizedBox(width: 10),
             itemBuilder: (context, index) {
               final card = myCards[index];
-              return SizedBox(
-                width: 250,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: Image.asset(
-                          card.backgroundImage,
-                          height: 160,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            card.bankLogo,
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    card.cardType,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
-                                    ),
-                                  ),
-                                  Text(
-                                    card.cardNumber,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              TextButton.icon(
-                                onPressed: (){},
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Theme.of(context).colorScheme.tertiary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10), // smaller radius
-                                  ),
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15)
-                                ),
-                                icon: Icon(
-                                  Icons.visibility_outlined,
-                                  color: Theme.of(context).colorScheme.inversePrimary
-                                ),
-                                label: Text(
-                                  "Details",
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.inversePrimary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ]
-                ),
-              );
+              return CreditCard(card: card);
             }
           ),
         ),
 
         // Transactions
-        // Container(),
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Transactions",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
+                    ),
+                  ),
+                  Text(
+                    "See all",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
       ],
     );
   }
