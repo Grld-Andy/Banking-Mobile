@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_bank/features/main/data/bank_cards.dart';
+import 'package:mobile_bank/features/main/data/transactions.dart';
+import 'package:mobile_bank/features/main/domain/models/transaction.dart';
 import 'package:mobile_bank/features/main/presentation/components/homepage/credit_card.dart';
 import 'package:mobile_bank/features/main/presentation/components/homepage/salutations.dart';
+import 'package:mobile_bank/themes/light_mode.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,150 +22,226 @@ class _HomepageState extends State<Homepage> {
       _isMoneyVisible = !_isMoneyVisible;
     });
   }
-  String displayCurrentMoney(){
+
+  String displayFormattedMoney(int val){
     if(_isMoneyVisible){
       final formatter = NumberFormat.currency(locale: 'en_GH', symbol: 'GHS ');
-      return formatter.format(currentMoney/100);
+      return formatter.format(val/100);
     }else{
       final hiddenMoney = "GHS ".padRight(8, "*");
       return hiddenMoney;
     }
   }
 
+  String displayFormattedDate(DateTime dateTime){
+    final formatter = DateFormat("MMMM d, hh:mm a");
+    return formatter.format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 15,
-      children: [
-        // Salutations
-        Salutations(),
-
-        // Check balance
-        Container(
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.tertiary,
-            borderRadius: BorderRadius.circular(10)
+    return SingleChildScrollView(
+      child: Column(
+        spacing: 15,
+        children: [
+          // Salutations
+          Salutations(),
+      
+          // Check balance
+          Container(
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.tertiary,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Your balance",
+                  style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        displayFormattedMoney(currentMoney),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25.0
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: setIsMoneyVisible,
+                        icon: Icon(
+                          _isMoneyVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined
+                        )
+                      )
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: (){},
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.inversePrimary)
+                  ),
+                  child: Text(
+                    "Add money",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                )
+              ],
+            )
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      
+          // Your cards
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Your balance",
+                "Your cards",
                 style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
+              Text(
+                "+ New card",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 160,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: myCards.length,
+              separatorBuilder: (_, __) => SizedBox(width: 10),
+              itemBuilder: (context, index) {
+                final card = myCards[index];
+                return CreditCard(card: card);
+              }
+            ),
+          ),
+      
+          // Transactions
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+            child: Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      displayCurrentMoney(),
+                      "Transactions",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 25.0
+                        fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
                       ),
                     ),
-                    IconButton(
-                      onPressed: setIsMoneyVisible,
-                      icon: Icon(
-                        _isMoneyVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined
-                      )
+                    Text(
+                      "See all",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                      ),
                     )
                   ],
                 ),
-              ),
-              TextButton(
-                onPressed: (){},
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.inversePrimary)
-                ),
-                child: Text(
-                  "Add money",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.tertiary,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              )
-            ],
-          )
-        ),
-
-        // Your cards
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Your cards",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.inversePrimary,
-                fontWeight: FontWeight.bold,
-                fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
-              ),
+                ListView.separated(
+                  itemCount: transactions.length,
+                  separatorBuilder: (_, _) => Divider(height: 20.0, thickness: 1.0,),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index){
+                    Transaction transaction = transactions[index];
+                    return Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.circular(1000),
+                            child: Image.asset(
+                              transaction.image,
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Text(transaction.name,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.inversePrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                              ),
+                            ),
+                            Text(displayFormattedDate(transaction.dateTime),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("- ${displayFormattedMoney(transaction.cost)}",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.inversePrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.green,
+                                borderRadius: BorderRadius.circular(50)
+                              ),
+                              child: Text("- ${displayFormattedMoney(transaction.bonus)}}",
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.secondary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  }
+                )
+              ],
             ),
-            Text(
-              "+ New card",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.inversePrimary,
-                fontWeight: FontWeight.bold,
-                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 160,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: myCards.length,
-            separatorBuilder: (_, __) => SizedBox(width: 10),
-            itemBuilder: (context, index) {
-              final card = myCards[index];
-              return CreditCard(card: card);
-            }
           ),
-        ),
-
-        // Transactions
-        Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).colorScheme.tertiary,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Transactions",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
-                    ),
-                  ),
-                  Text(
-                    "See all",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
