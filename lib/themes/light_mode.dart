@@ -10,7 +10,7 @@ ThemeData lightMode = ThemeData(
   textTheme: textTheme,
   colorScheme: ColorScheme.light(
     primary: Colors.grey.shade500,
-    secondary: Colors.grey.shade300,
+    secondary: Colors.grey.shade400,
     tertiary: Colors.white,
     inversePrimary: Colors.grey.shade900,
   ),

@@ -33,7 +33,17 @@ class _MainpageState extends State<Mainpage> {
     },
     {
       'icon': CircleAvatar(
-        radius: 10,
+        radius: 13,
+        backgroundColor: Colors.green,
+        child: CircleAvatar(
+          radius: 11,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.asset(
+              "assets/images/profile_female.jpg",
+            ),
+          ),
+        ),
       ),
       'label': "Profile"
     },
@@ -59,6 +69,9 @@ class _MainpageState extends State<Mainpage> {
           padding: const EdgeInsets.all(10.0),
           child: PageView(
             controller: _pageController,
+            onPageChanged: (index){
+              setCurrentIndex(index);
+            },
             children: [
               Homepage(),
               Mappage(),

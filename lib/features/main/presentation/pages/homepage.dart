@@ -147,6 +147,7 @@ class _HomepageState extends State<Homepage> {
               color: Theme.of(context).colorScheme.tertiary,
             ),
             child: Column(
+              spacing: 20,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,63 +172,73 @@ class _HomepageState extends State<Homepage> {
                 ),
                 ListView.separated(
                   itemCount: transactions.length,
-                  separatorBuilder: (_, _) => Divider(height: 20.0, thickness: 1.0,),
+                  separatorBuilder: (_, _) => Divider(height: 20.0, thickness: 0.5, indent: 60, endIndent: 10,),
                   shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index){
                     Transaction transaction = transactions[index];
                     return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
-                            borderRadius: BorderRadius.circular(10)
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadiusGeometry.circular(1000),
-                            child: Image.asset(
-                              transaction.image,
-                              height: 50,
-                              width: 50,
-                            ),
-                          ),
-                        ),
-                        Column(
+                        Row( 
+                          spacing: 5,
                           children: [
-                            Text(transaction.name,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadiusGeometry.circular(1000),
+                                child: Image.asset(
+                                  transaction.image,
+                                  height: 50,
+                                  width: 50,
+                                ),
                               ),
                             ),
-                            Text(displayFormattedDate(transaction.dateTime),
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(transaction.name,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                                  ),
+                                ),
+                                Text(displayFormattedDate(transaction.dateTime),
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.secondary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ]
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text("- ${displayFormattedMoney(transaction.cost)}",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.inversePrimary,
                                 fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
                               ),
                             ),
                             Container(
+                              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.green,
                                 borderRadius: BorderRadius.circular(50)
                               ),
-                              child: Text("- ${displayFormattedMoney(transaction.bonus)}}",
+                              child: Text("+ ${displayFormattedMoney(transaction.bonus)}",
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.secondary,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                                  fontSize: 10
                                 ),
                               ),
                             ),
