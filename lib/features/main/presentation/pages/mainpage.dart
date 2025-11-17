@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_bank/features/main/presentation/homepage.dart';
-import 'package:mobile_bank/features/main/presentation/mappage.dart';
-import 'package:mobile_bank/features/main/presentation/profilepage.dart';
-import 'package:mobile_bank/features/main/presentation/settingspage.dart';
-import 'package:mobile_bank/features/main/presentation/transferpage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/homepage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/mappage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/profilepage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/settingspage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/transferpage.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_bank/features/main/presentation/mainpage.dart';
+import 'package:mobile_bank/features/main/presentation/pages/mainpage.dart';
 import 'package:mobile_bank/themes/dark_mode.dart';
 import 'package:mobile_bank/themes/light_mode.dart';
 

@@ -44,7 +44,7 @@ class _HomepageState extends State<Homepage> {
       cardType: "Bank",
       cardNumber: ".... 5678",
       backgroundImage: 'assets/images/bankBg.webp',
-      bankLogo: 'assets/images/bank.jpg',
+      bankLogo: 'assets/images/bank.png',
     ),
   ];
 
