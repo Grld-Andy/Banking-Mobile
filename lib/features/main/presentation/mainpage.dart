@@ -55,15 +55,18 @@ class _MainpageState extends State<Mainpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          children: [
-            Homepage(),
-            Mappage(),
-            Transferpage(),
-            Settingspage(),
-            Profilepage()
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: PageView(
+            controller: _pageController,
+            children: [
+              Homepage(),
+              Mappage(),
+              Transferpage(),
+              Settingspage(),
+              Profilepage()
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: ClipRRect(
