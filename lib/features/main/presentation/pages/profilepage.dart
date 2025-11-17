@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bank/features/main/data/personal_info.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
@@ -12,8 +13,8 @@ class _ProfilepageState extends State<Profilepage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        spacing: 20,
         children: [
-
           // Profile image
           Center(
             child: Column(
@@ -66,7 +67,74 @@ class _ProfilepageState extends State<Profilepage> {
           ),
 
           // Personal Info
-          Container()
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+            child: Column(
+              spacing: 20,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Personal Info",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize
+                      ),
+                    ),
+                    Text(
+                      "Edit",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                      ),
+                    )
+                  ],
+                ),
+                ListView.separated(
+                  separatorBuilder: (_, _) => SizedBox(height: 5),
+                  shrinkWrap: true,
+                  itemCount: personalInfoList.length,
+                  itemBuilder: (context, index) {
+                    final item = personalInfoList[index];
+                    return Row(
+                      spacing: 10,
+                      children: [
+                        item.icon,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize
+                              ),
+                            ),
+                            Text(
+                              item.value,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.inversePrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    );
+                  },
+                )
+              ]
+            )
+          )
         ],
       ),
     );
