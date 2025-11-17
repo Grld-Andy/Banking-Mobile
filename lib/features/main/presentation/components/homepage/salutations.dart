@@ -14,7 +14,7 @@ class Salutations extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Good morning, Terry",
+              "Good morning, Jane",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.bold,
