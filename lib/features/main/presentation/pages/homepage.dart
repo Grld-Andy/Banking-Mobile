@@ -184,6 +184,7 @@ class _HomepageState extends State<Homepage> {
                           spacing: 5,
                           children: [
                             Container(
+                              padding: EdgeInsets.all(3),
                               decoration: BoxDecoration(
                                 border: Border.all(width: 1, color: Theme.of(context).colorScheme.secondary),
                                 borderRadius: BorderRadius.circular(10)
@@ -192,8 +193,8 @@ class _HomepageState extends State<Homepage> {
                                 borderRadius: BorderRadiusGeometry.circular(1000),
                                 child: Image.asset(
                                   transaction.image,
-                                  height: 50,
-                                  width: 50,
+                                  height: 40,
+                                  width: 40,
                                 ),
                               ),
                             ),
