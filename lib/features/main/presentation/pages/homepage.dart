@@ -23,8 +23,8 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  String displayFormattedMoney(int val){
-    if(_isMoneyVisible){
+  String displayFormattedMoney(int val, bool isMoneyVisible){
+    if(isMoneyVisible){
       final formatter = NumberFormat.currency(locale: 'en_GH', symbol: 'GHS ');
       return formatter.format(val/100);
     }else{
@@ -71,7 +71,7 @@ class _HomepageState extends State<Homepage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        displayFormattedMoney(currentMoney),
+                        displayFormattedMoney(currentMoney, _isMoneyVisible),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,
                           fontWeight: FontWeight.bold,
@@ -223,7 +223,7 @@ class _HomepageState extends State<Homepage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("- ${displayFormattedMoney(transaction.cost)}",
+                            Text("- ${displayFormattedMoney(transaction.cost, true)}",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.inversePrimary,
                                 fontWeight: FontWeight.bold,
@@ -236,7 +236,7 @@ class _HomepageState extends State<Homepage> {
                                 color: Theme.of(context).colorScheme.green,
                                 borderRadius: BorderRadius.circular(50)
                               ),
-                              child: Text("+ ${displayFormattedMoney(transaction.bonus)}",
+                              child: Text("+ ${displayFormattedMoney(transaction.bonus, true)}",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
